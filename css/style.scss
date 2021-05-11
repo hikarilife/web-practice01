@@ -1,0 +1,470 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+$colors: (
+  text: #141414,
+  primary: #1b1310,
+);
+
+@function cl($key) {
+  @return map-get($colors, $key);
+}
+
+// トラッキングの計算
+@function tracking($tracking) {
+  @return $tracking / 1000;
+}
+
+// Breakpoints for Media Queries
+$xxl: 1400px;
+$xl: 1200px;
+$lg: 992px;
+$md: 768px;
+$sm: 576px;
+
+// 各px以下の時適用
+@mixin xxl {
+  @media (max-width: ($xxl)) {
+    @content;
+  }
+}
+@mixin xl {
+  @media (max-width: ($xl)) {
+    @content;
+  }
+}
+@mixin lg {
+  @media (max-width: ($lg)) {
+    @content;
+  }
+}
+@mixin md {
+  @media (max-width: ($md)) {
+    @content;
+  }
+}
+@mixin sm {
+  @media (max-width: ($sm)) {
+    @content;
+  }
+}
+
+html {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  font-size: 1.6em;
+  color: cl(text);
+}
+
+// common parts
+.cmn-title {
+  font-size: 3.6rem;
+  text-align: center;
+  padding-bottom: 70px;
+}
+
+.cmn-subtitle {
+  font-size: 2.4rem;
+  padding-bottom: 40px;
+  font-family: noto-sans-cjk-jp, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 4.8rem;
+
+  @include xl {
+    font-size: 2rem;
+    line-height: 4rem;
+  }
+
+  p {
+    letter-spacing: tracking(100em);
+  }
+}
+
+// header
+.header {
+  background-color: cl(primary);
+  height: 74px;
+  color: white;
+  display: flex;
+  padding-left: 120px;
+  padding-right: 120px;
+  border-bottom: 2px solid white;
+
+  @include xl {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  &__logo {
+    font-size: 2.6rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  &__hamburger-btn {
+    display: none;
+
+    // Hamburger button
+    @include xl {
+      display: block;
+      position: relative;
+      font: inherit;
+      top: 0;
+      bottom: 0;
+      left: 10;
+      right: 0;
+      width: 25px;
+      height: 22px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: auto;
+      box-shadow: 0 0 2rem transparent;
+      outline: none;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+
+      &__line {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        transition: transform 0.3s ease;
+        z-index: 2;
+
+        &:first-child {
+          top: 0;
+        }
+
+        &:nth-child(2) {
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
+
+        &:last-child {
+          bottom: 0;
+        }
+      }
+
+      &.--active {
+        .header__hamburger-btn__line {
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          transition: transform 0.3s ease;
+
+          &:first-child {
+            transform: rotate(45deg);
+          }
+
+          &:nth-child(2) {
+            transform: rotate(45deg);
+          }
+
+          &:last-child {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+  }
+
+  &__nav {
+    margin-left: auto;
+
+    // Hamburger Menu
+    @include xl {
+      display: table;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      margin-left: 0;
+      width: 100%;
+      height: 665px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: cl(primary);
+      z-index: 1;
+
+      &.--active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+
+    @include xl {
+      display: table-cell;
+      vertical-align: middle;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  &__item {
+    padding-top: 27px;
+
+    &:nth-child(n + 2) {
+      padding-left: 55px;
+
+      @include xl {
+        padding-left: 0;
+        padding-top: 55px;
+      }
+    }
+  }
+
+  &__link {
+    display: inline-block;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    @include xl {
+      :nth-child(n + 2) {
+        margin-top: 50px;
+      }
+    }
+  }
+}
+
+// top
+.top {
+  position: relative;
+  width: 100%;
+  height: 740px;
+  background-image: url(../img/fv-bgi@2x.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  @include lg {
+    background-image: url(../img/fv-bgi_sp@2x.jpg);
+  }
+
+  &__title {
+    color: white;
+    font-size: 5rem;
+    padding: 32px 42px;
+    border: 2px solid white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    @include lg {
+      font-size: 3rem;
+      padding: 30px 40px;
+      width: 300px;
+    }
+  }
+}
+
+// about
+.about {
+  padding-top: 150px;
+  max-width: 1030px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  &__desc {
+    font-size: 1.4rem;
+    font-family: noto-sans-cjk-jp, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 3rem;
+    letter-spacing: tracking(50em);
+  }
+}
+
+// service
+.service {
+  padding-top: 150px;
+  padding-right: 50px;
+  padding-left: 50px;
+  max-width: 1030px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include lg {
+    max-width: 480px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+
+    @include lg {
+      display: block;
+    }
+
+    &:nth-child(n + 2) {
+      padding-top: 50px;
+    }
+
+    &:nth-child(even) {
+      flex-flow: row-reverse;
+      .service__text {
+        padding-left: 70px;
+        @include lg {
+          padding-left: 0;
+        }
+      }
+    }
+
+    &:nth-child(odd) {
+      .service__text {
+        padding-right: 70px;
+        @include lg {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+
+  &__img {
+    @include lg {
+      padding-top: 40px;
+      width: 100%;
+    }
+  }
+
+  &__text {
+    font-size: 1.4rem;
+    font-family: noto-sans-cjk-jp, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 30px;
+    letter-spacing: tracking(50em);
+    @include lg {
+      width: 100%;
+    }
+  }
+}
+
+.news {
+  padding-top: 150px;
+  max-width: 1030px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include xl {
+    width: 320px;
+  }
+
+  &__contents {
+    display: flex;
+    @include xl {
+      display: block;
+    }
+  }
+
+  &__card {
+    width: 320px;
+
+    &:nth-child(n + 2) {
+      margin-left: 32px;
+      @include xl {
+        margin-left: 0;
+        margin-top: 50px;
+      }
+    }
+  }
+
+  &__text {
+    font-size: 1.3rem;
+    font-family: "HiraKakuProN-W6", sans-serif;
+    padding: 33px 25px;
+    box-shadow: 0 0 6px cl(text);
+    line-height: 2.5rem;
+  }
+}
+
+.contact {
+  padding-top: 150px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  &__title {
+    font-size: 2.4em;
+    font-family: noto-sans-cjk-jp, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    padding-bottom: 67px;
+  }
+
+  &__form {
+    letter-spacing: tracking(50em);
+  }
+
+  &__label {
+    display: block;
+    font-family: "ヒラギノ角ゴ ProN W3", sans-serif;
+    padding-bottom: 3px;
+
+    &:nth-child(n + 2) {
+      padding-top: 22px;
+    }
+  }
+
+  &__input {
+    border: 1px solid;
+    width: 100%;
+    height: 30px;
+    border: 1px solid cl(text);
+  }
+
+  &__message {
+    width: 100%;
+    border: 1px solid cl(text);
+    resize: none;
+  }
+
+  &__link {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
+  &__btn {
+    background-color: cl(primary);
+    color: white;
+    padding: 16px 97px;
+    border-radius: 51px;
+    box-shadow: 0 0 6px cl(text);
+    font-size: 2rem;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.footer {
+  background-color: cl(primary);
+  color: white;
+  text-align: center;
+  padding-top: 31px;
+  padding-bottom: 31px;
+  font-size: 1.4rem;
+}
